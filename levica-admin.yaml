@@ -1,0 +1,22 @@
+- name: Build store
+  hosts: all
+  become: true
+  become_user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+      - name: Remove old code
+        file:
+          path: /var/www/web-build
+          state: absent
+      - name: Create directory
+        file:
+          path: /var/www/web-build
+          state: directory
+
+      - name: Copy the code
+        copy:
+          src: /mnt/levica-dev-admin/web-build/
+          dest: /var/www/web-build
+          owner: root
+          group: root
